@@ -3,7 +3,7 @@ import QueryString from 'query-string';
 import _ from 'lodash';
 //import './App.css';
 import { Button, Flex, Input, Header, Text } from '@fluentui/react-northstar'
-import { PlayIcon, MicIcon } from '@fluentui/react-icons-northstar'
+import { PlayIcon, MicIcon, ClipboardCopiedToIcon } from '@fluentui/react-icons-northstar'
 
 class CreateName extends React.Component {
   constructor(props) {
@@ -56,7 +56,7 @@ class CreateName extends React.Component {
         <Header
           as="h1"
           content="Say My Name"
-          description="Tell us what you want to be called!"
+          description="Tell us what you want to be called."
         />
         <form onSubmit={this.handleSubmit}>
           <div>
@@ -83,14 +83,14 @@ class CreateName extends React.Component {
         <div className="Mic">
           <Flex gap="gap.smaller">
             <Button content="Generate URL" secondary />
-            <Button icon={<MicIcon />} content="Record it myself" iconPosition="before" tinted />
+            <Button icon={<MicIcon />} content="Record it myself (Coming soon!)" iconPosition="before" tinted />
           </Flex>
         </div>
         <div className="SharingURL">
           <Text content="Share your URL" />
           <Text content={`http://howtosaymy.name/?display=${this.state.display}&locale=${this.state.locale}&native=${this.state.native}`} />
           <Flex gap="gap.smaller">
-            <Button icon={<PlayIcon />} content="Copy URL" iconPosition="before" primary />
+            <Button icon={<ClipboardCopiedToIcon />} content="Copy URL" iconPosition="before" tinted />
           </Flex>
         </div>
       </div>

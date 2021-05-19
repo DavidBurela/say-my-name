@@ -9,14 +9,7 @@ class ViewName extends Component {
 
     handlePlaySound = (e) => {
         let synth = window.speechSynthesis;
-        var voices = [];
-
-        voices = synth.getVoices().sort(function (a, b) {
-            const aname = a.name.toUpperCase(), bname = b.name.toUpperCase();
-            if (aname < bname) return -1;
-            else if (aname == bname) return 0;
-            else return +1;
-        });
+        var voices = synth.getVoices();
 
         e.preventDefault();
 
@@ -24,7 +17,6 @@ class ViewName extends Component {
             console.error('speechSynthesis.speaking');
             return;
         }
-
         let utterThis = new SpeechSynthesisUtterance(this.props.native);
         utterThis.onend = function (e) {
             console.log('SpeechSynthesisUtterance.onend');
@@ -34,7 +26,7 @@ class ViewName extends Component {
         }
 
         for (let i = 0; i < voices.length; i++) {
-            if (voices[i].locale === this.props.locale) {
+            if (voices[i].lang === this.props.locale) {
                 utterThis.voice = voices[i];
                 break;
             }
@@ -50,15 +42,16 @@ class ViewName extends Component {
                     content="Say My Name"
                 />
                 <div className="Play">
-                <Text content={`My display name is: ${this.props.display}`} />
-                <p/>
-                <Text content={`This is how you say my name:`} />
-                    <Flex gap="gap.large">
-                        <Button icon={<PlayIcon />} content="Play" iconPosition="before" primary onClick={this.handlePlaySound} />
-                        <Button content="Click here to generate your own link" secondary onClick={(e) => window.location.href = '/'} />
-                    </Flex>
-                    <Text content={`Text: ${this.props.native}`} />
+                    <Header as="h2" content={`My display name is: ${this.props.display}`} />
+                    <p />
+                    <Header as="h2" content={`You can call me:`} />
+                    <Button icon={<PlayIcon />} content="Play" iconPosition="before" primary onClick={this.handlePlaySound} />
+                    <p/>
+                    <Text content={`Native Text: ${this.props.native}`} />
+                    <br/>
                     <Text content={`Locale: ${this.props.locale}`} />
+                    <p/>
+                    <Button text primary content="Like this? Click here to create your own!" onClick={(e) => window.location.href = '/'} />
                 </div>
             </div>
         )
