@@ -1,6 +1,4 @@
 import React from 'react';
-import QueryString from 'query-string';
-import _ from 'lodash';
 //import './App.css';
 import { Button, Flex, Input, Header, Text } from '@fluentui/react-northstar'
 import { PlayIcon, MicIcon, ClipboardCopiedToIcon } from '@fluentui/react-icons-northstar'
@@ -88,7 +86,7 @@ class CreateName extends React.Component {
         </div>
         <div className="SharingURL">
           <Text content="Share your URL" />
-          <Text content={`http://howtosaymy.name/?display=${this.state.display}&locale=${this.state.locale}&native=${this.state.native}`} />
+          <Text content={`${window.location.href}?display=${this.state.display}&locale=${this.state.locale}&native=${this.state.native}`} />
           <Flex gap="gap.smaller">
             <Button icon={<ClipboardCopiedToIcon />} content="Copy URL" iconPosition="before" tinted />
           </Flex>

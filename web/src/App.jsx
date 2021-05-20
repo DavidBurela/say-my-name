@@ -2,7 +2,6 @@ import React from 'react';
 import QueryString from 'query-string';
 import _ from 'lodash';
 //import './App.css';
-import { Button, Flex, Input, Header, Text } from '@fluentui/react-northstar'
 import CreateName from './CreateName.jsx';
 import ViewName from './ViewName.jsx';
 

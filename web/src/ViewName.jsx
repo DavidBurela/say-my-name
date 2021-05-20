@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Button, Flex, Input, Header, Text } from '@fluentui/react-northstar'
-import { PlayIcon, MicIcon } from '@fluentui/react-icons-northstar'
+import { Button, Header, Text } from '@fluentui/react-northstar'
+import { PlayIcon } from '@fluentui/react-icons-northstar'
 
 class ViewName extends Component {
     constructor(props) {
