@@ -59,14 +59,14 @@ class CreateName extends React.Component {
         />
           <form onSubmit={this.handleSubmit}>
             <div>
-              <Input className="displayName" label="Your preferred name in English" />
+              <Input className="displayName" label="Your display name (in English)" />
             </div>
             <div>
-              <Input className="nativeName" label="Your preferred name in native script" />
+              <Input className="nativeName" label="What you want others to call you" />
             </div>
             <div>
               <label>
-                Language locale
+                Language locale of preferred name
               </label>
             </div>
             <div>
@@ -130,7 +130,7 @@ class CreateName extends React.Component {
       var selectedOption = voiceSelect.selectedOptions[0].getAttribute('data-name');
       let selectedLocale = voiceSelect.selectedOptions[0].getAttribute('data-lang');
 
-      this.setState({ display: displayInputTxt.value, locale: selectedLocale, native: nativeInputTxt.value });
+      // this.setState({ display: displayInputTxt.value, locale: selectedLocale, native: nativeInputTxt.value });
       for(var i = 0; i < voices.length ; i++) {
         if(voices[i].name === selectedOption) {
           utterThis.voice = voices[i];
@@ -143,7 +143,10 @@ class CreateName extends React.Component {
   }
 
   generateURL(){
-    this.setState({url:`${window.location.href}?display=${this.state.display}&locale=${this.state.locale}&native=${this.state.native}`});
+    let displayInputTxt = document.querySelector('.displayName input').value;
+    let nativeInputTxt = document.querySelector('.nativeName input').value;
+    let localeTxt = document.querySelector('select').selectedOptions[0].getAttribute('data-lang');
+    this.setState({url:`${window.location.href}?display=${displayInputTxt}&locale=${localeTxt}&native=${nativeInputTxt}`});
   }
 }
 
