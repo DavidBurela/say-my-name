@@ -1,4 +1,4 @@
-authtoken: <redact token>
+authtoken: 1en8VesCvLON1Uet6IF7lnmN1an_6XRwxckVdqrkwige2zDFi
 tunnels:
     signaling:
         addr: "https://localhost:3000"
