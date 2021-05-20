@@ -8,7 +8,7 @@ import ViewName from './ViewName.jsx';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { locale: null, display: null, native: null };
+    this.state = { locale: null, display: null, native: null, pronoun: null };
   }
 
   componentDidMount() {
@@ -19,8 +19,8 @@ class App extends React.Component {
     if (_.isEmpty(parsed)) {
       // Means no query params entered
     } else {
-      const { locale, display, native } = parsed;
-      this.setState({ locale: locale, display: display, native: native });
+      const { locale, display, native, pronoun } = parsed;
+      this.setState({ locale: locale, display: display, native: native, pronoun: pronoun });
     }
   }
 
@@ -28,7 +28,7 @@ class App extends React.Component {
 
     let page;
     if (this.state.locale && this.state.display && this.state.native) {
-      page = <ViewName locale={this.state.locale} display={this.state.display} native={this.state.native} />;
+      page = <ViewName locale={this.state.locale} display={this.state.display} native={this.state.native} pronoun={this.state.pronoun} />;
     } else {
       page = <CreateName />;
     }
