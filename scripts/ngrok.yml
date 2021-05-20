@@ -1,0 +1,11 @@
+authtoken: <add-auth-token>
+tunnels:
+    signaling:
+        addr: "https://localhost:3000"
+        proto: http
+        hostname: "tham.ngrok.io"
+        host_header: "localhost:3000"
+    media: 
+        addr: 8445
+        proto: tcp
+        hostname: "tham.ngrok.io"

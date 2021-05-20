@@ -1,0 +1,48 @@
+{
+    "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.8/MicrosoftTeams.schema.json",
+    "manifestVersion": "1.8",
+    "version": "1.0.0",
+    "id": "5d0e894c-7024-4db3-9d84-b9bccb563a2e",
+    "packageName": "com.microsoft.teams.extension",
+    "developer": {
+        "name": "Teams App, Inc.",
+        "websiteUrl": "https://tham.ngrok.io",
+        "privacyUrl": "https://tham.ngrok.io/privacy",
+        "termsOfUseUrl": "https://tham.ngrok.io/termsofuse"
+    },
+    "icons": {
+        "color": "color.png",
+        "outline": "outline.png"
+    },
+    "name": {
+        "short": "saymyname-cbtham",
+        "full": ""
+    },
+    "description": {
+        "short": "Short description for Channel Group Tab.",
+        "full": "Full description of Channel Group Tab."
+    },
+    "accentColor": "#FFFFFF",
+    "configurableTabs": [
+        {
+            "configurationUrl": "https://localhost:3000/config",
+            "canUpdateConfiguration": true,
+            "scopes": [
+                "team",
+                "groupchat"
+            ]
+        }
+    ],
+    "permissions": [
+        "identity",
+        "messageTeamMembers"
+    ],
+    "validDomains": [
+        "tham.ngrok.io",
+        "localhost:3000"
+    ],
+    "webApplicationInfo": {
+        "id": "79231f68-e150-48b9-b013-cba740aa9954",
+        "resource": "api://localhost/79231f68-e150-48b9-b013-cba740aa9954"
+    }
+}

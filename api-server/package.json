@@ -1,0 +1,20 @@
+{
+    "name": "api-server",
+    "version": "0.0.1",
+    "description": "The API server for a Teams tab app",
+    "main": "app.js",
+    "scripts": {
+        "start": "node server.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "dotenv": "^8.2.0",
+        "express": "^4.17.1",
+        "jwt-decode": "^2.2.0",
+        "node-fetch": "^2.6.0"
+    },
+    "msteams": {
+        "teamsAppId": "5d0e894c-7024-4db3-9d84-b9bccb563a2e"
+    }
+}
