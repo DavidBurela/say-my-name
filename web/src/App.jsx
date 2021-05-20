@@ -1,13 +1,14 @@
 import React from 'react';
-//import './App.css';
-import { Button, Flex, Input, Header, Text } from '@fluentui/react-northstar'
-import { PlayIcon, MicIcon } from '@fluentui/react-icons-northstar'
+import './App.css';
+import { Button, Flex, Input, Header, Text, Alert, Popup, Tooltip } from '@fluentui/react-northstar'
+import { PlayIcon, MicIcon, ClipboardCopiedToIcon, LinkIcon } from '@fluentui/react-icons-northstar'
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { locale: null, displayName: null, nativeName: null };
+    this.state = { locale: null, displayName: null, nativeName: null, url: null};
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.generateURL = this.generateURL.bind(this);
   }
 
   componentDidMount() {
@@ -72,23 +73,22 @@ class App extends React.Component {
               <select>
               </select>
             </div>
-            <div className="Play">
-              <Flex gap="gap.large">
+            <div className="Button">
+              <Flex gap="gap.smaller" hAlign="center">
                 <Button icon={<PlayIcon />} content="Play"  iconPosition="before" primary />
               </Flex>
             </div>
           </form>
-          <div className="Mic">
-            <Flex gap="gap.smaller">
-              <Button content="Generate URL" secondary />
-              <Button icon={<MicIcon />} content="Record it myself"  iconPosition="before" tinted />
+          <div className="Button">
+            <Flex gap="gap.smaller" hAlign="center">
+              <Button onClick={this.generateURL}　content="Generate URL" secondary />
+              <Tooltip trigger={<Button disabledFocusable icon={<MicIcon />} content="Record it myself"  iconPosition="before" tinted />} content="Coming soon..."/>
             </Flex>
           </div>
           <div className="SharingURL">
-            <Text content="Share your URL" />
-            <Text content={`http://howtosaymy.name/?displayName=${this.state.displayName}&locale=${this.state.locale}&nativeName=${this.state.nativeName}`} />
-            <Flex gap="gap.smaller">
-              <Button icon={<PlayIcon />} content="Copy URL" iconPosition="before" primary />
+            <Flex gap="gap.smaller" hAlign="center">
+              <Text success content={this.state.url} color="Brand"/>
+              <Popup trigger={<Button icon={<ClipboardCopiedToIcon />} content="Copy URL" iconPosition="before" primary />} content="Successfully copied!" inline />
             </Flex>
           </div>
       </div>
@@ -112,15 +112,14 @@ class App extends React.Component {
     });
 
     e.preventDefault();
-  
 
-    
-      if (synth.speaking) {
-          console.error('speechSynthesis.speaking');
-          return;
-      }
-      if (nativeInputTxt.value !== '') {
-        console.log(nativeInputTxt.value)
+    if (synth.speaking) {
+        console.error('speechSynthesis.speaking');
+        return;
+    }
+
+    if (nativeInputTxt.value !== '') {
+      console.log(nativeInputTxt.value)
       var utterThis = new SpeechSynthesisUtterance(nativeInputTxt.value);
       utterThis.onend = function (e) {
           console.log('SpeechSynthesisUtterance.onend');
@@ -131,7 +130,7 @@ class App extends React.Component {
       console.log(voiceSelect.selectedOptions)
       var selectedOption = voiceSelect.selectedOptions[0].getAttribute('data-name');
       console.log(selectedOption);
-      
+    
       this.setState({ displayName: displayInputTxt.value, locale: selectedOption, nativeName: nativeInputTxt.value});
       console.log(voices)
       for(var i = 0; i < voices.length ; i++) {
@@ -141,8 +140,12 @@ class App extends React.Component {
         }
       }
       synth.speak(utterThis);
-      }
-      nativeInputTxt.blur();
+    }
+    nativeInputTxt.blur();
+  }
+
+  generateURL(){
+    this.setState({url:`http://howtosaymy.name/?displayName=${this.state.displayName}&locale=${this.state.locale}&nativeName=${this.state.nativeName}`});
   }
 }
 
