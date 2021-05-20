@@ -9,6 +9,7 @@ class CreateName extends React.Component {
     this.state = { locale: null, display: null, native: null, url: null};
     this.handleSubmit = this.handleSubmit.bind(this);
     this.generateURL = this.generateURL.bind(this);
+    this.copyURL = this.copyURL.bind(this);
   }
 
   componentDidMount() {
@@ -88,7 +89,7 @@ class CreateName extends React.Component {
           <div className="SharingURL">
             <Flex gap="gap.smaller" hAlign="center">
               <Text success content={this.state.url} color="Brand"/>
-              <Popup trigger={<Button icon={<ClipboardCopiedToIcon />} content="Copy URL" iconPosition="before" primary />} content="Successfully copied!" inline />
+              <Popup trigger={<Button onClick={this.copyURL} icon={<ClipboardCopiedToIcon />} content="Copy URL" iconPosition="before" primary />} content="Successfully copied!" inline />
             </Flex>
           </div>
       </div>
@@ -147,6 +148,10 @@ class CreateName extends React.Component {
     let nativeInputTxt = document.querySelector('.nativeName input').value;
     let localeTxt = document.querySelector('select').selectedOptions[0].getAttribute('data-lang');
     this.setState({url:`${window.location.href}?display=${displayInputTxt}&locale=${localeTxt}&native=${nativeInputTxt}`});
+  }
+
+  copyURL(){
+    navigator.clipboard.writeText(this.state.url);
   }
 }
 
