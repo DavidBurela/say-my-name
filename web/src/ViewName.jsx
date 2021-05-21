@@ -48,10 +48,10 @@ class ViewName extends Component {
                     {this.props.pronoun && <div className="row">
                         <Header as="h2" content={`My pronouns are: ${this.props.pronoun}`} />
                         <p /></div>}
-                    <Header as="h2" content={`You can call me:`} />
+                    <Header as="h2" content={`You pronounce it like this:`} />
                     <Button icon={<PlayIcon />} content="Play" iconPosition="before" primary onClick={this.handlePlaySound} />
                     <p />
-                    <Text content={`Native Text: ${this.props.native}`} />
+                    <Text content={`Pronunciation: ${this.props.native}`} />
                     <br />
                     <Text content={`Locale: ${this.props.locale}`} />
                     <p />

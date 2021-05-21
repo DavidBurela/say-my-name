@@ -2,6 +2,8 @@ import React from 'react';
 import './App.css';
 import { Button, Flex, Input, Header, Text, Alert, Popup, Tooltip } from '@fluentui/react-northstar'
 import { PlayIcon, MicIcon, ClipboardCopiedToIcon, LinkIcon } from '@fluentui/react-icons-northstar'
+//import { initializeIcons } from '@uifabric/icons';
+//initializeIcons();
 
 class CreateName extends React.Component {
   constructor(props) {
@@ -10,6 +12,7 @@ class CreateName extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.generateURL = this.generateURL.bind(this);
     this.copyURL = this.copyURL.bind(this);
+    this.saveInfo = this.saveInfo.bind(this);
   }
 
   componentDidMount() {
@@ -19,7 +22,7 @@ class CreateName extends React.Component {
 
     var shareURL = document.getElementById("SharingURL");
     shareURL.style.display = 'none';
-
+    
     populateVoiceList();
     if (speechSynthesis.onvoiceschanged !== undefined) {
       speechSynthesis.onvoiceschanged = populateVoiceList;
@@ -61,26 +64,26 @@ class CreateName extends React.Component {
         />
         <form onSubmit={this.handleSubmit}>
             <label>
-              Your display name (in English)
+              Display Name
             </label>
           <div>
-            <Input className="displayName" label="Your display name in English" required />
+            <Input className="displayName" label="Display Name" required placeholder="Daisuke (大輔)"/>
           </div>
           <label>
             Your preferred pronouns (Optional)
             </label>
           <div>
-            <Input className="pronoun" label="Your preferred pronouns (Optional)" />
+            <Input className="pronoun" label="Your preferred pronouns (Optional)"　placeholder="He/Him" />
           </div>
             <label>
-              What you want others to call you
+            Name pronunciation
             </label>
             <div>
-            <Input className="nativeName" label="Your preferred name - What should others call you?" required />
+            <Input className="nativeName" label="Name pronunciation" required　placeholder="だいすけ" />
           </div>
           <div className="row">
             <label>
-              Language locale of preferred name
+              Pronunciation locale
               </label>
           </div>
           <div>
@@ -97,8 +100,11 @@ class CreateName extends React.Component {
         <div id="SharingURL">
           <Header as="h3" className="row" content={`Share your name with others:`} color="Brand" />
           <Text id="mySharingURL" content={this.state.url} color="Brand" />
-          <div className="row">
+          {/*<div className="row">
             <Popup trigger={<Button size="small" icon={<ClipboardCopiedToIcon />} content="Copy URL" iconPosition="before" onClick={this.copyURL} secondary />} content="Successfully copied!" inline />
+          </div>*/}
+          <div className="row">
+          <Button text primary content="Click here to save this in your profile" onClick={this.saveInfo} />
           </div>
         </div>
       </div>
@@ -173,6 +179,11 @@ class CreateName extends React.Component {
 
   copyURL(){
     navigator.clipboard.writeText(this.state.url);
+    console.log(this.state.url)
+  }
+
+  saveInfo(){
+    console.log(this.state.url)
   }
 }
 
