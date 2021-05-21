@@ -38,6 +38,10 @@ Considerations:
 
 ## Potential Spikes
 
+### Merging codebases
+- Currently there are 2 project folders `web` & `teams`. This was done for ease of development and debugging for Teams, due to the requirements of SSO, ngrock, etc.
+- Combining them into one website where `/` is the public website, and `/tab` is the Teams app may make more sense.
+
 ### Investigation on TTS phoneme options:
 - UI to support phonetic input
   - [IPA (International Phonetic Alphabet) keyboard](https://ipa.typeit.org/full/)
