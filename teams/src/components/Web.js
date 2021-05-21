@@ -207,7 +207,7 @@ class Tab extends React.Component {
       } else {
         content =
           <div>
-            <h1>{title}</h1>
+            {/*<h1>{title}</h1>*/}
             <h3>{ssoMessage}</h3>
             <h3>{serverExchangeMessage}</h3>          
             <h3>{consentMessage}</h3>

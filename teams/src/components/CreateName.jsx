@@ -2,6 +2,8 @@ import React from 'react';
 import './App.css';
 import { Button, Flex, Input, Header, Text, Alert, Popup, Tooltip } from '@fluentui/react-northstar'
 import { PlayIcon, MicIcon, ClipboardCopiedToIcon, LinkIcon } from '@fluentui/react-icons-northstar'
+//import { initializeIcons } from '@uifabric/icons';
+//initializeIcons();
 
 class CreateName extends React.Component {
   constructor(props) {
@@ -19,7 +21,7 @@ class CreateName extends React.Component {
 
     var shareURL = document.getElementById("SharingURL");
     shareURL.style.display = 'none';
-
+    
     populateVoiceList();
     if (speechSynthesis.onvoiceschanged !== undefined) {
       speechSynthesis.onvoiceschanged = populateVoiceList;
@@ -91,15 +93,16 @@ class CreateName extends React.Component {
             <Flex gap="gap.smaller" hAlign="center">
               <Button icon={<PlayIcon />} content="Play and Generate Link" iconPosition="before" primary />
               <Tooltip trigger={<Button disabledFocusable icon={<MicIcon />} content="Record it myself" iconPosition="before" tinted />} content="Coming soon..." />
+              <Button content="Save" iconPosition="before" secondary />
             </Flex>
           </div>
         </form>
         <div id="SharingURL">
           <Header as="h3" className="row" content={`Share your name with others:`} color="Brand" />
           <Text id="mySharingURL" content={this.state.url} color="Brand" />
-          <div className="row">
+          {/*<div className="row">
             <Popup trigger={<Button size="small" icon={<ClipboardCopiedToIcon />} content="Copy URL" iconPosition="before" onClick={this.copyURL} secondary />} content="Successfully copied!" inline />
-          </div>
+          </div>*/}
         </div>
       </div>
     );
@@ -173,6 +176,7 @@ class CreateName extends React.Component {
 
   copyURL(){
     navigator.clipboard.writeText(this.state.url);
+    console.log(this.state.url)
   }
 }
 
