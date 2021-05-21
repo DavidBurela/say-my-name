@@ -38,10 +38,11 @@ class ViewName extends Component {
     render() {
         return (
             <div className="ViewName">
-                <Header
-                    as="h1"
-                    content="Say My Name"
-                />
+                <a href='/' style={{ textDecoration: 'none' }} >
+                    <Header
+                        as="h1"
+                        content="Say My Name"
+                    /></a>
                 <div className="Play">
                     <Header as="h2" content={`My display name is: ${this.props.display}`} />
                     <p />
@@ -55,6 +56,7 @@ class ViewName extends Component {
                     <br />
                     <Text content={`Locale: ${this.props.locale}`} />
                     <p />
+                    {/* <a href='/' >"Like this? Click here to create your own!</a> */}
                     <Button text primary content="Like this? Click here to create your own!" onClick={(e) => window.location.href = '/'} />
                 </div>
             </div>

@@ -54,11 +54,11 @@ class CreateName extends React.Component {
   render() {
     return (
       <div className="CreateName">
-        <Header
-          as="h1"
-          content="Say My Name"
-          description="Tell us what you want to be called ! "
-        />
+        <a href='/' style={{ textDecoration: 'none' }} >
+          <Header
+            as="h1"
+            content="Say My Name"
+          /></a>
         <form onSubmit={this.handleSubmit}>
           <div className="row">
             <Input className="displayName" label="Display Name" required placeholder="Daisuke (大輔)" />
@@ -163,7 +163,7 @@ class CreateName extends React.Component {
     this.setState({ url: url });
   }
 
-  copyURL(){
+  copyURL() {
     navigator.clipboard.writeText(this.state.url);
   }
 }
