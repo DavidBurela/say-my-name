@@ -11,6 +11,7 @@
 - [Personas](documentation/personas.md)
 - [UX mockups](documentation/ux-mockups.md)
 - [Technology Decisions](documentation/technology-decisions.md)
+- [Roadmap](documentation/roadmap.md)
 - [Teams development setup](teams/README.md)
 
 ## Repository structure
