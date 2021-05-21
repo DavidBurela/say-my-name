@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './App.css';
 import { Button, Header, Text } from '@fluentui/react-northstar'
 import { PlayIcon } from '@fluentui/react-icons-northstar'
 
@@ -44,13 +45,16 @@ class ViewName extends Component {
                 <div className="Play">
                     <Header as="h2" content={`My display name is: ${this.props.display}`} />
                     <p />
+                    {this.props.pronoun && <div className="row">
+                        <Header as="h2" content={`My pronouns are: ${this.props.pronoun}`} />
+                        <p /></div>}
                     <Header as="h2" content={`You can call me:`} />
                     <Button icon={<PlayIcon />} content="Play" iconPosition="before" primary onClick={this.handlePlaySound} />
-                    <p/>
+                    <p />
                     <Text content={`Native Text: ${this.props.native}`} />
-                    <br/>
+                    <br />
                     <Text content={`Locale: ${this.props.locale}`} />
-                    <p/>
+                    <p />
                     <Button text primary content="Like this? Click here to create your own!" onClick={(e) => window.location.href = '/'} />
                 </div>
             </div>

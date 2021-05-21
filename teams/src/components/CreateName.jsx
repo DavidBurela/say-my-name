@@ -6,7 +6,7 @@ import { PlayIcon, MicIcon, ClipboardCopiedToIcon, LinkIcon } from '@fluentui/re
 class CreateName extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { locale: null, display: null, native: null, url: null };
+    this.state = { locale: null, display: null, native: null, url: null, pronoun: null };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.generateURL = this.generateURL.bind(this);
     this.copyURL = this.copyURL.bind(this);
@@ -64,13 +64,19 @@ class CreateName extends React.Component {
               Your display name (in English)
             </label>
           <div>
-            <Input className="displayName" label="Your display name (in English)" required />
+            <Input className="displayName" label="Your display name in English" required />
+          </div>
+          <label>
+            Your preferred pronouns (Optional)
+            </label>
+          <div>
+            <Input className="pronoun" label="Your preferred pronouns (Optional)" />
           </div>
             <label>
               What you want others to call you
             </label>
             <div>
-            <Input className="nativeName" label="What you want others to call you" required />
+            <Input className="nativeName" label="Your preferred name - What should others call you?" required />
           </div>
           <div className="row">
             <label>
@@ -152,8 +158,17 @@ class CreateName extends React.Component {
   generateURL() {
     let displayInputTxt = document.querySelector('.displayName input').value;
     let nativeInputTxt = document.querySelector('.nativeName input').value;
+    let pronounTxt = document.querySelector('.pronoun input').value;
     let localeTxt = document.querySelector('select').selectedOptions[0].getAttribute('data-lang');
-    this.setState({ url: encodeURI(`${window.location.href}?display=${displayInputTxt}&locale=${localeTxt}&native=${nativeInputTxt}`) });
+    let url = '';
+
+    if (pronounTxt) {
+      url = encodeURI(`${window.location.href}?display=${displayInputTxt}&locale=${localeTxt}&native=${nativeInputTxt}&pronoun=${pronounTxt}`);
+    } else {
+      url = encodeURI(`${window.location.href}?display=${displayInputTxt}&locale=${localeTxt}&native=${nativeInputTxt}`);
+    }
+
+    this.setState({ url: url });
   }
 
   copyURL(){
