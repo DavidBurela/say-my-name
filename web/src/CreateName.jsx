@@ -61,13 +61,13 @@ class CreateName extends React.Component {
         />
         <form onSubmit={this.handleSubmit}>
           <div className="row">
-            <Input className="displayName" label="Your display name in English" required />
+            <Input className="displayName" label="Your display name in English" required placeholder="Daisuke (大輔)" />
           </div>
           <div className="row">
-            <Input className="pronoun" label="Your preferred pronouns (Optional)" />
+            <Input className="pronoun" label="Your preferred pronouns (Optional)" placeholder="He/Him" />
           </div>
           <div className="row">
-            <Input className="nativeName" label="Your preferred name - What should others call you?" required />
+            <Input className="nativeName" label="Your preferred name - What should others call you?" required placeholder="だいすけ" />
           </div>
           <div className="row">
             <label>

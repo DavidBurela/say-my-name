@@ -12,6 +12,7 @@ class CreateName extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.generateURL = this.generateURL.bind(this);
     this.copyURL = this.copyURL.bind(this);
+    this.saveInfo = this.saveInfo.bind(this);
   }
 
   componentDidMount() {
@@ -66,19 +67,19 @@ class CreateName extends React.Component {
               Your display name (in English)
             </label>
           <div>
-            <Input className="displayName" label="Your display name in English" required />
+            <Input className="displayName" label="Your display name in English" required placeholder="Daisuke (大輔)"/>
           </div>
           <label>
             Your preferred pronouns (Optional)
             </label>
           <div>
-            <Input className="pronoun" label="Your preferred pronouns (Optional)" />
+            <Input className="pronoun" label="Your preferred pronouns (Optional)"　placeholder="He/Him" />
           </div>
             <label>
               What you want others to call you
             </label>
             <div>
-            <Input className="nativeName" label="Your preferred name - What should others call you?" required />
+            <Input className="nativeName" label="Your preferred name - What should others call you?" required　placeholder="だいすけ" />
           </div>
           <div className="row">
             <label>
@@ -93,7 +94,6 @@ class CreateName extends React.Component {
             <Flex gap="gap.smaller" hAlign="center">
               <Button icon={<PlayIcon />} content="Play and Generate Link" iconPosition="before" primary />
               <Tooltip trigger={<Button disabledFocusable icon={<MicIcon />} content="Record it myself" iconPosition="before" tinted />} content="Coming soon..." />
-              <Button content="Save" iconPosition="before" secondary />
             </Flex>
           </div>
         </form>
@@ -103,6 +103,9 @@ class CreateName extends React.Component {
           {/*<div className="row">
             <Popup trigger={<Button size="small" icon={<ClipboardCopiedToIcon />} content="Copy URL" iconPosition="before" onClick={this.copyURL} secondary />} content="Successfully copied!" inline />
           </div>*/}
+          <div className="row">
+          <Button text primary content="Click here to save this in your profile" onClick={this.saveInfo} />
+          </div>
         </div>
       </div>
     );
@@ -176,6 +179,10 @@ class CreateName extends React.Component {
 
   copyURL(){
     navigator.clipboard.writeText(this.state.url);
+    console.log(this.state.url)
+  }
+
+  saveInfo(){
     console.log(this.state.url)
   }
 }
