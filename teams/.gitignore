@@ -5,6 +5,7 @@
 /api-server/node_modules
 /.pnp
 .pnp.js
+/scripts/ngrok.yml
 
 # testing
 /coverage

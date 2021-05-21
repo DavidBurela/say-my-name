@@ -6,6 +6,11 @@ import './App.css';
 import * as microsoftTeams from "@microsoft/teams-js";
 import { Avatar, Loader } from '@fluentui/react-northstar'
 
+import QueryString from 'query-string';
+import _ from 'lodash';
+import CreateName from './CreateName.jsx';
+import ViewName from './ViewName.jsx';
+
 /**
  * This tab component renders the main tab content
  * of your app.
@@ -20,7 +25,11 @@ class Tab extends React.Component {
       consentProvided: false,
       graphAccessToken: "",
       photo: "",
-      error: false
+      error: false,
+      locale: null, 
+      display: null, 
+      native: null, 
+      //url: null
     }
 
     //Bind any functions that need to be passed as callbacks or used to React components
@@ -51,6 +60,18 @@ class Tab extends React.Component {
     };
 
     microsoftTeams.authentication.getAuthToken(authTokenRequestOptions);
+
+    
+    const parsed = QueryString.parse(window.location.search);
+    console.log(parsed);
+    console.log(_.isEmpty(parsed))
+
+    if (_.isEmpty(parsed)) {
+      // Means no query params entered
+    } else {
+      const { locale, display, native } = parsed;
+      this.setState({ locale: locale, display: display, native: native });
+    }
   }  
 
   ssoLoginSuccess = async (result) => {
@@ -113,6 +134,7 @@ class Tab extends React.Component {
     this.setState({error:true});
   }  
 
+
   //React lifecycle method that gets called after a component's state or props updates
   //Learn more: https://reactjs.org/docs/react-component.html#componentdidupdate
   componentDidUpdate = async (prevProps, prevState) => {
@@ -120,6 +142,8 @@ class Tab extends React.Component {
     //Check to see if a Graph access token is now in state AND that it didn't exist previously
     if((prevState.graphAccessToken === "") && (this.state.graphAccessToken !== "")){
       this.callGraphFromClient();
+      this.graphGetProfile();
+      //this.graphPatchProfile();
     }
   }  
 
@@ -149,6 +173,51 @@ class Tab extends React.Component {
     })
   }
 
+  // Fetch the user's profile
+  graphGetProfile = async () => {
+    let graphEndpoint = `https://graph.microsoft.com/v1.0/me`;
+    let graphRequestParams = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        "authorization": "bearer " + this.state.graphAccessToken
+      }
+    }
+
+    let response = await fetch(graphEndpoint,graphRequestParams).catch(this.unhandledFetchError);
+    let result = await response.json()
+    console.log("THE RESULT IS : ", result);
+    console.log("Name : ", result.displayName);
+    if(!response.ok){
+      console.error("ERROR: ", response);
+      this.setState({error:true});
+    }
+  }
+
+  // Patch the user's profile
+  graphPatchProfile = async () => {
+    let graphEndpoint = `https://graph.microsoft.com/v1.0/me`;
+    let graphRequestParams = {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        "authorization": "bearer " + this.state.graphAccessToken
+      },
+      body: {
+        "officeLocation": "TEST"
+      }
+    }
+
+    let response = await fetch(graphEndpoint,graphRequestParams).catch(this.unhandledFetchError);
+    let result = await response.json()
+    console.log("THE RESULT IS : ", result);
+    console.log("Name : ", result.displayName);
+    if(!response.ok){
+      console.error("ERROR: ", response);
+      this.setState({error:true});
+    }
+  }
+
   //Generic error handler ( avoids having to do async fetch in try/catch block )
   unhandledFetchError(err){
     console.error("Unhandled fetch error: ",err);
@@ -157,11 +226,11 @@ class Tab extends React.Component {
 
   render() {
 
-      let title = Object.keys(this.state.context).length > 0 ?
-        'Congratulations ' + this.state.context['upn'] + '! This is your tab' : <Loader/>;
+ let title = Object.keys(this.state.context).length > 0 ?
+        'Modified ' + this.state.context['upn'] + '! This is your tab' : <Loader/>;
 
       let ssoMessage = this.state.ssoToken === "" ?
-        <Loader label='Performing Azure AD single sign-on authentication...'/>: null;
+        <Loader label='Performing      Azure AD single sign-on authentication...'/>: null;
       
       let serverExchangeMessage = (this.state.ssoToken !== "") && (!this.state.consentRequired) && (this.state.photo==="") ?
         <Loader label='Exchanging SSO access token for Graph access token...'/> : null;
@@ -171,6 +240,13 @@ class Tab extends React.Component {
 
       let avatar = this.state.photo !== "" ?
         <Avatar image={this.state.photo} size='largest'/> : null;
+    
+    let page;
+        if (this.state.locale && this.state.display && this.state.native) {
+          page = <ViewName locale={this.state.locale} display={this.state.display} native={this.state.native} />;
+        } else {
+          page = <CreateName />;
+        }
 
       let content;
       if(this.state.error){
@@ -178,7 +254,7 @@ class Tab extends React.Component {
       } else {
         content =
           <div>
-            <h1>{title}</h1>
+            {/*<h1>{title}</h1>*/}
             <h3>{ssoMessage}</h3>
             <h3>{serverExchangeMessage}</h3>          
             <h3>{consentMessage}</h3>
@@ -187,8 +263,9 @@ class Tab extends React.Component {
       }
       
       return (
-        <div>
+        <div className="App">
           {content}
+          {page}
         </div>
       );
   }
