@@ -18,4 +18,6 @@
 - **Web:** public website accessible at <https://HowToSayMy.Name>
 - **Teams:** the Teams Tab application
 
-![Example: Daisuke](documentation/images/example-web-daisuke.png)
+## Screenshots
+![Defining Daisuke](documentation/images/example-web-daisuke-define.png)
+![Viewing Daisuke](documentation/images/example-web-daisuke-view.png)

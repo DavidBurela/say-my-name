@@ -29,6 +29,13 @@ Considerations:
 - Correct pronunciation of names
 - Phonemes for fine grained control
 
+## Architecture
+- Source code in GitHub
+- GitHub actions for CI/CD
+- Hosting on Azure Static Web Apps
+
+![Architecture](images/architecture-web.png)
+
 ## Potential Spikes
 
 ### Investigation on TTS phoneme options:
@@ -47,7 +54,3 @@ Considerations:
 - Upload audio to user's One Drive, generate a link, and then upload the link against AAD custom attribute.
 - Azure blob storage
 
-### Actions based on Persona:
-- As Persona 1, I can generate a URL using the TTS workflow.
-- As Persona 1, I can record my name and generate a URL.
-- As Persona 2, I can view a person's profile and playback the name recording.
