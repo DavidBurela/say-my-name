@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import { Button, Flex, Input, Header, Text, Alert, Popup, Tooltip } from '@fluentui/react-northstar'
 import { PlayIcon, MicIcon, ClipboardCopiedToIcon, LinkIcon } from '@fluentui/react-icons-northstar'
+import {Helmet} from 'react-helmet'
 
 class CreateName extends React.Component {
   constructor(props) {
@@ -54,6 +55,9 @@ class CreateName extends React.Component {
   render() {
     return (
       <div className="CreateName">
+        <Helmet>
+            <title>How to say my name</title>
+        </Helmet>
         <a href='/' style={{ textDecoration: 'none' }} >
           <Header
             as="h1"

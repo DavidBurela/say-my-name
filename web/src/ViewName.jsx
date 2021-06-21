@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import { Button, Header, Text } from '@fluentui/react-northstar'
 import { PlayIcon } from '@fluentui/react-icons-northstar'
+import {Helmet} from 'react-helmet'
 
 class ViewName extends Component {
     constructor(props) {
@@ -38,6 +39,9 @@ class ViewName extends Component {
     render() {
         return (
             <div className="ViewName">
+                <Helmet>
+                    <title>How to say '{this.props.display}'</title>
+                </Helmet>
                 <a href='/' style={{ textDecoration: 'none' }} >
                     <Header
                         as="h1"
