@@ -1,5 +1,6 @@
-# Getting Started with Create React App
+# To run the app
 
+Add .env with the apprioriate application insights instrumentation key.
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

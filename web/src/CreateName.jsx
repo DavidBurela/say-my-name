@@ -1,19 +1,24 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import { Button, Flex, Input, Header, Text, Alert, Popup, Tooltip } from '@fluentui/react-northstar'
 import { PlayIcon, MicIcon, ClipboardCopiedToIcon, LinkIcon } from '@fluentui/react-icons-northstar'
 import {Helmet} from 'react-helmet'
+import { withAITracking } from '@microsoft/applicationinsights-react-js';
+import { reactPlugin } from './AppInsights';
+import { useAppInsightsContext, useTrackEvent } from "@microsoft/applicationinsights-react-js";
 
-class CreateName extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { locale: null, display: null, native: null, url: null, pronoun: null };
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.generateURL = this.generateURL.bind(this);
-    this.copyURL = this.copyURL.bind(this);
-  }
+const CreateName = () => { 
+  const [locale, setLocale] = useState(null);
+  const [display, setDisplay] = useState(null);
+  const [native, setNative] = useState(null);
+  const [url, setURL] = useState(null);
+  const [pronoun, setPronoun] = useState(null);
+  const [creatingName, setCreateName] = useState([]);
 
-  componentDidMount() {
+  const appInsights = useAppInsightsContext();
+  const trackCreateName = useTrackEvent(appInsights, "CreateNameClicked", creatingName);
+  
+  useEffect(() => {
     var synth = window.speechSynthesis;
     var voiceSelect = document.querySelector('select');
     var voices = [];
@@ -50,57 +55,9 @@ class CreateName extends React.Component {
       }
       voiceSelect.selectedIndex = selectedIndex;
     }
-  }
+  }, []);
 
-  render() {
-    return (
-      <div className="CreateName">
-        <Helmet>
-            <title>How to say my name</title>
-        </Helmet>
-        <a href='/' style={{ textDecoration: 'none' }} >
-          <Header
-            as="h1"
-            content="Say My Name"
-          /></a>
-        <form onSubmit={this.handleSubmit}>
-          <div className="row">
-            <Input className="displayName" label="Display Name" required placeholder="Daisuke (大輔)" />
-          </div>
-          <div className="row">
-            <Input className="pronoun" label="Your preferred pronouns (Optional)" placeholder="He/Him" />
-          </div>
-          <div className="row">
-            <Input className="nativeName" label="Name pronunciation" required placeholder="だいすけ" />
-          </div>
-          <div className="row">
-            <label>
-              Pronunciation locale
-              </label>
-          </div>
-          <div>
-            <select>
-            </select>
-          </div>
-          <div className="row">
-            <Flex gap="gap.smaller" hAlign="center">
-              <Button icon={<PlayIcon />} content="Play and Generate Link" iconPosition="before" primary />
-              <Tooltip trigger={<Button disabledFocusable icon={<MicIcon />} content="Record it myself" iconPosition="before" tinted />} content="Coming soon..." />
-            </Flex>
-          </div>
-        </form>
-        <div id="SharingURL">
-          <Header as="h3" className="row" content={`Share your name with others:`} color="Brand" />
-          <Text id="mySharingURL" content={this.state.url} color="Brand" />
-          <div className="row">
-            <Popup trigger={<Button size="small" icon={<ClipboardCopiedToIcon />} content="Copy URL" iconPosition="before" onClick={this.copyURL} secondary />} content="Successfully copied!" inline />
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  handleSubmit(e) {
+  const handleSubmit = (e) => {
     var synth = window.speechSynthesis;
     //var inputForm = document.querySelector('form');
     var displayInputTxt = document.querySelector('.displayName input');
@@ -145,12 +102,13 @@ class CreateName extends React.Component {
       synth.speak(utterThis);
     }
     nativeInputTxt.blur();
-    this.generateURL();
+    generateURL();
     var shareURL = document.getElementById("SharingURL");
     shareURL.style.display = 'block';
+    setCreateName('CreateName');
   }
 
-  generateURL() {
+  const generateURL = () => {
     let displayInputTxt = document.querySelector('.displayName input').value;
     let nativeInputTxt = document.querySelector('.nativeName input').value;
     let pronounTxt = document.querySelector('.pronoun input').value;
@@ -164,12 +122,61 @@ class CreateName extends React.Component {
       url = encodeURI(`${window.location.href}?display=${displayInputTxt}&locale=${localeTxt}&native=${nativeInputTxt}`);
     }
 
-    this.setState({ url: url });
+    setURL(url);
   }
 
-  copyURL() {
-    navigator.clipboard.writeText(this.state.url);
+  const copyURL= () =>{
+    navigator.clipboard.writeText(url);
   }
+
+return (
+      <div className="CreateName">
+        <Helmet>
+            <title>How to say my name</title>
+        </Helmet>
+        <a href='/' style={{ textDecoration: 'none' }} >
+          <Header
+            as="h1"
+            content="Say My Name"
+          /></a>
+        <form onSubmit={(e) => {
+          trackCreateName();
+          handleSubmit(e);
+        }}>
+          <div className="row">
+            <Input className="displayName" label="Display Name" required placeholder="Daisuke (大輔)" />
+          </div>
+          <div className="row">
+            <Input className="pronoun" label="Your preferred pronouns (Optional)" placeholder="He/Him" />
+          </div>
+          <div className="row">
+            <Input className="nativeName" label="Name pronunciation" required placeholder="だいすけ" />
+          </div>
+          <div className="row">
+            <label>
+              Pronunciation locale
+              </label>
+          </div>
+          <div>
+            <select>
+            </select>
+          </div>
+          <div className="row">
+            <Flex gap="gap.smaller" hAlign="center">
+              <Button icon={<PlayIcon />} content="Play and Generate Link" iconPosition="before" primary />
+              <Tooltip trigger={<Button disabledFocusable icon={<MicIcon />} content="Record it myself" iconPosition="before" tinted />} content="Coming soon..." />
+            </Flex>
+          </div>
+        </form>
+        <div id="SharingURL">
+          <Header as="h3" className="row" content={`Share your name with others:`} color="Brand" />
+          <Text id="mySharingURL" content={url} color="Brand" />
+          <div className="row">
+            <Popup trigger={<Button size="small" icon={<ClipboardCopiedToIcon />} content="Copy URL" iconPosition="before" onClick={copyURL} secondary />} content="Successfully copied!" inline />
+          </div>
+        </div>
+      </div>
+    );
 }
 
-export default CreateName;
+export default withAITracking(reactPlugin, CreateName, "CreateNamePage");
